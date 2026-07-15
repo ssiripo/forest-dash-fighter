@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forest Dash Fighters</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="gameShell">
+    <canvas id="gameCanvas" width="1280" height="720" aria-label="Forest Dash Fighters game canvas"></canvas>
+
+    <section id="hud" class="hud">
+      <div class="player-panel p1-panel">
+        <div class="panel-row">
+          <strong id="p1Name">Player 1</strong>
+          <span id="p1Distance">0m</span>
+        </div>
+        <div class="health-track"><div id="p1Health" class="health-fill"></div></div>
+        <div id="p1Effects" class="effects"></div>
+      </div>
+
+      <div class="race-panel">
+        <div id="raceStatus">Ready</div>
+        <div id="finishDistance">Finish: 0m</div>
+        <button id="hudHomeButton" type="button" class="hud-home-button">Home</button>
+      </div>
+
+      <div class="player-panel p2-panel">
+        <div class="panel-row">
+          <strong id="p2Name">Player 2</strong>
+          <span id="p2Distance">0m</span>
+        </div>
+        <div class="health-track"><div id="p2Health" class="health-fill"></div></div>
+        <div id="p2Effects" class="effects"></div>
+      </div>
+    </section>
+
+    <div id="countdown" class="countdown hidden">3</div>
+
+    <section id="startScreen" class="modal">
+      <div class="modal-card start-card">
+        <h1>Forest Dash Fighters</h1>
+        <p>Race through the forest, grab powerups, and knock your rival off pace.</p>
+        <div class="character-select">
+          <div class="select-panel">
+            <h2>Player 1 Character</h2>
+            <div id="p1Selected" class="selected-character">Fawad</div>
+            <div id="p1CharacterGrid" class="character-grid" aria-label="Player 1 character choices"></div>
+          </div>
+          <div class="select-panel">
+            <h2>Player 2 Character</h2>
+            <div id="p2Selected" class="selected-character">GOOOD</div>
+            <div id="p2CharacterGrid" class="character-grid" aria-label="Player 2 character choices"></div>
+          </div>
+        </div>
+        <div class="controls-grid">
+          <div>
+            <h2>Player 1</h2>
+            <div class="keybind-row"><span>Move Left</span><button type="button" class="keybind-button" data-player="0" data-action="left">A</button></div>
+            <div class="keybind-row"><span>Move Right</span><button type="button" class="keybind-button" data-player="0" data-action="right">D</button></div>
+            <div class="keybind-row"><span>Jump</span><button type="button" class="keybind-button" data-player="0" data-action="jump">W</button></div>
+            <div class="keybind-row"><span>Attack</span><button type="button" class="keybind-button" data-player="0" data-action="attack">F</button></div>
+          </div>
+          <div>
+            <h2>Player 2</h2>
+            <div class="keybind-row"><span>Move Left</span><button type="button" class="keybind-button" data-player="1" data-action="left">Left</button></div>
+            <div class="keybind-row"><span>Move Right</span><button type="button" class="keybind-button" data-player="1" data-action="right">Right</button></div>
+            <div class="keybind-row"><span>Jump</span><button type="button" class="keybind-button" data-player="1" data-action="jump">Up</button></div>
+            <div class="keybind-row"><span>Attack</span><button type="button" class="keybind-button" data-player="1" data-action="attack">M</button></div>
+          </div>
+        </div>
+        <div class="skill-guide" aria-label="Skill guide">
+          <h2>Skills</h2>
+          <div class="skill-list">
+            <div><strong>SPD</strong><span>Run faster for a short time.</span></div>
+            <div><strong>JMP</strong><span>Jump higher for a short time.</span></div>
+            <div><strong>SHD</strong><span>Block most damage and knockback.</span></div>
+            <div><strong>HP</strong><span>Heal instantly.</span></div>
+            <div><strong>POW</strong><span>Hit harder with extra knockback.</span></div>
+          </div>
+        </div>
+        <button id="startButton" type="button">Start Race</button>
+      </div>
+    </section>
+
+    <section id="finishScreen" class="modal hidden">
+      <div class="modal-card">
+        <h1 id="winnerText">Player wins!</h1>
+        <p>Press <kbd>R</kbd> to restart or <kbd>H</kbd> to choose new characters.</p>
+        <div class="modal-actions">
+          <button id="restartButton" type="button">Restart</button>
+          <button id="homeButton" type="button" class="secondary-button">Home</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>

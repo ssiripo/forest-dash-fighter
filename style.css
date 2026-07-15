@@ -1,0 +1,469 @@
+:root {
+  --ink: #172019;
+  --panel: rgba(243, 255, 220, 0.88);
+  --panel-edge: #31492b;
+  --gold: #ffd35a;
+  --red: #d94a46;
+  --green: #4db85f;
+  --blue: #58a6d6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  align-items: center;
+  background: #172019;
+  color: var(--ink);
+  display: flex;
+  font-family: "Trebuchet MS", Verdana, sans-serif;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#gameShell {
+  aspect-ratio: 16 / 9;
+  background: #92d986;
+  image-rendering: pixelated;
+  max-height: 100vh;
+  max-width: 100vw;
+  position: relative;
+  width: min(100vw, 177.78vh);
+}
+
+#gameCanvas {
+  display: block;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  width: 100%;
+}
+
+.hud {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(220px, 1fr) minmax(160px, 0.65fr) minmax(220px, 1fr);
+  left: 18px;
+  pointer-events: none;
+  position: absolute;
+  right: 18px;
+  top: 14px;
+}
+
+.player-panel,
+.race-panel {
+  background: var(--panel);
+  border: 3px solid var(--panel-edge);
+  border-radius: 8px;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.28);
+  min-height: 74px;
+  padding: 10px;
+}
+
+.race-panel {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-weight: 800;
+  justify-content: center;
+  pointer-events: auto;
+  text-align: center;
+}
+
+.panel-row {
+  align-items: center;
+  display: flex;
+  font-size: 15px;
+  justify-content: space-between;
+  line-height: 1;
+}
+
+.health-track {
+  background: #26332a;
+  border: 2px solid #172019;
+  height: 16px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.health-fill {
+  background: linear-gradient(90deg, #e34848, #ffd35a, #54c75f);
+  height: 100%;
+  transform-origin: left center;
+  width: 100%;
+}
+
+.effects {
+  color: #21311e;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 15px;
+  font-weight: 900;
+  gap: 7px;
+  min-height: 24px;
+  padding-top: 6px;
+}
+
+.effect-pill {
+  background: #d7f0bc;
+  border: 2px solid #496b39;
+  border-radius: 4px;
+  padding: 3px 7px;
+}
+
+.countdown {
+  color: #fff7b0;
+  font-size: clamp(64px, 16vw, 160px);
+  font-weight: 900;
+  left: 50%;
+  line-height: 1;
+  position: absolute;
+  text-shadow: 0 8px 0 #27411e, 0 12px 24px rgba(0, 0, 0, 0.35);
+  top: 44%;
+  transform: translate(-50%, -50%);
+}
+
+.modal {
+  align-items: center;
+  background: rgba(23, 32, 25, 0.48);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 20px;
+  position: absolute;
+}
+
+.modal-card {
+  background: rgba(247, 255, 224, 0.96);
+  border: 4px solid #263b23;
+  border-radius: 8px;
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.3);
+  max-width: 720px;
+  padding: 26px;
+  text-align: center;
+  width: min(92vw, 720px);
+}
+
+.start-card {
+  max-height: calc(100vh - 32px);
+  max-width: 1040px;
+  overflow: auto;
+  width: min(94vw, 1040px);
+}
+
+.modal-card h1 {
+  color: #263b23;
+  font-size: clamp(30px, 5vw, 54px);
+  line-height: 1;
+  margin: 0 0 12px;
+}
+
+.modal-card h2 {
+  color: #31492b;
+  font-size: 20px;
+  margin: 0 0 10px;
+}
+
+.modal-card p {
+  font-size: 18px;
+  margin: 8px 0;
+}
+
+.controls-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 18px 0 12px;
+}
+
+.controls-grid > div,
+.select-panel {
+  background: #e2f3c8;
+  border: 3px solid #496b39;
+  border-radius: 6px;
+  padding: 14px;
+}
+
+.keybind-row {
+  align-items: center;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(0, 1fr) 92px;
+  margin: 7px 0;
+  text-align: left;
+}
+
+.keybind-row span {
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.keybind-button {
+  border-width: 3px;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.28);
+  font-size: 13px;
+  min-height: 34px;
+  overflow: hidden;
+  padding: 6px 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.keybind-button.listening {
+  background: #58a6d6;
+  color: #ffffff;
+}
+
+.skill-guide {
+  background: #e2f3c8;
+  border: 3px solid #496b39;
+  border-radius: 6px;
+  margin: 0 0 16px;
+  padding: 12px;
+}
+
+.skill-list {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.skill-list div {
+  align-items: center;
+  background: #f7ffe0;
+  border: 2px solid #6c8c45;
+  border-radius: 5px;
+  display: grid;
+  gap: 4px;
+  min-height: 68px;
+  padding: 8px;
+}
+
+.skill-list strong {
+  color: #26332a;
+  font-size: 16px;
+}
+
+.skill-list span {
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.character-select {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 20px 0;
+}
+
+.selected-character {
+  color: #26332a;
+  font-size: 14px;
+  font-weight: 900;
+  margin: -4px 0 10px;
+  min-height: 18px;
+}
+
+.character-grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-height: 240px;
+  overflow: auto;
+  padding: 2px;
+}
+
+.character-card {
+  background: #f7ffe0;
+  border: 3px solid #6c8c45;
+  border-radius: 6px;
+  color: #26332a;
+  cursor: pointer;
+  display: grid;
+  gap: 4px;
+  min-height: 94px;
+  padding: 6px;
+  place-items: center;
+}
+
+.character-card.selected {
+  background: #fff0a8;
+  border-color: #26332a;
+  box-shadow: inset 0 0 0 2px #ffd35a;
+}
+
+.character-card.locked {
+  background: #c9d5be;
+  border-color: #6d7867;
+  box-shadow: none;
+  color: #4a5548;
+  cursor: not-allowed;
+  opacity: 0.82;
+}
+
+.character-card.locked .character-thumb {
+  filter: grayscale(1) brightness(0.72);
+}
+
+.character-thumb {
+  background: #cfe7b4;
+  background-position: 88% 48%;
+  background-repeat: no-repeat;
+  background-size: 215% auto;
+  border: 2px solid #31492b;
+  display: block;
+  height: 58px;
+  image-rendering: pixelated;
+  width: 100%;
+}
+
+.character-label {
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.1;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lock-label {
+  background: #26332a;
+  border-radius: 4px;
+  color: #fff7b0;
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1.1;
+  padding: 3px 4px;
+  white-space: normal;
+}
+
+.use-label {
+  background: #ffd35a;
+  border: 2px solid #26332a;
+  border-radius: 4px;
+  color: #26332a;
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1;
+  padding: 2px 4px;
+}
+
+kbd {
+  background: #26332a;
+  border: 2px solid #111a13;
+  border-radius: 4px;
+  box-shadow: inset 0 -2px 0 rgba(255, 255, 255, 0.15);
+  color: white;
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 800;
+  margin: 0 3px;
+  min-width: 30px;
+  padding: 4px 7px;
+}
+
+button {
+  background: var(--gold);
+  border: 4px solid #26332a;
+  border-radius: 6px;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.32);
+  color: #26332a;
+  cursor: pointer;
+  font: 900 20px/1 "Trebuchet MS", Verdana, sans-serif;
+  min-height: 48px;
+  padding: 12px 22px;
+}
+
+button:active {
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.32);
+  transform: translateY(3px);
+}
+
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.secondary-button {
+  background: #d7f0bc;
+}
+
+.hud-home-button {
+  border-width: 2px;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.28);
+  font-size: 12px;
+  margin-top: 6px;
+  min-height: 26px;
+  padding: 5px 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .hud {
+    gap: 8px;
+    grid-template-columns: 1fr 0.8fr 1fr;
+    left: 8px;
+    right: 8px;
+    top: 8px;
+  }
+
+  .player-panel,
+  .race-panel {
+    min-height: 62px;
+    padding: 7px;
+  }
+
+  .panel-row,
+  .race-panel {
+    font-size: 11px;
+  }
+
+  .effects {
+    font-size: 12px;
+  }
+
+  .health-track {
+    height: 12px;
+  }
+
+  .controls-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .skill-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .character-select {
+    grid-template-columns: 1fr;
+  }
+
+  .character-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-height: 160px;
+  }
+
+  .character-card {
+    min-height: 82px;
+  }
+
+  .character-thumb {
+    height: 48px;
+  }
+}
