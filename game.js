@@ -1183,19 +1183,55 @@ class Level {
 
   drawFinish(context, camera) {
     const x = Math.round(FINISH_X - camera.x);
-    if (x < -80 || x > VIEW.width + 80) return;
-    context.fillStyle = "#251d1d";
-    context.fillRect(x, 120, 14, 470);
-    for (let y = 120; y < 360; y += 28) {
-      for (let i = 0; i < 4; i += 1) {
-        context.fillStyle = (i + y / 28) % 2 === 0 ? "#ffffff" : "#1a1a1a";
-        context.fillRect(x + 14 + i * 24, y, 24, 28);
+    if (x < -180 || x > VIEW.width + 180) return;
+
+    const topY = 96;
+    const groundY = 590;
+    const archW = 150;
+    const poleW = 18;
+    const tile = 18;
+
+    context.fillStyle = "rgba(23, 32, 25, 0.24)";
+    context.fillRect(x - 12, groundY - 4, archW + 66, 16);
+
+    context.fillStyle = "#2b241c";
+    context.fillRect(x, topY, poleW, groundY - topY);
+    context.fillRect(x + archW, topY, poleW, groundY - topY);
+    context.fillRect(x - 8, groundY - 20, poleW + 16, 24);
+    context.fillRect(x + archW - 8, groundY - 20, poleW + 16, 24);
+
+    context.fillStyle = "#6f4a2b";
+    context.fillRect(x + 4, topY, 6, groundY - topY - 12);
+    context.fillRect(x + archW + 4, topY, 6, groundY - topY - 12);
+
+    context.fillStyle = "#26332a";
+    context.fillRect(x - 10, topY - 12, archW + poleW + 20, 42);
+    context.fillStyle = "#fff7b0";
+    context.fillRect(x - 2, topY - 4, archW + poleW + 4, 26);
+    context.fillStyle = "#26332a";
+    context.font = "900 24px Trebuchet MS";
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.fillText("FINISH", x + archW / 2 + poleW / 2, topY + 10);
+
+    for (let row = 0; row < 6; row += 1) {
+      for (let col = 0; col < 8; col += 1) {
+        context.fillStyle = (row + col) % 2 === 0 ? "#f8fbff" : "#151515";
+        context.fillRect(x + poleW + col * tile, topY + 42 + row * tile, tile, tile);
       }
     }
-    context.fillStyle = "#fff7b0";
-    context.font = "900 28px Trebuchet MS";
-    context.textAlign = "center";
-    context.fillText("FINISH", x + 62, 104);
+
+    context.fillStyle = "#d94a46";
+    context.fillRect(x + poleW, topY + 42 + tile * 6, tile * 8, 10);
+    context.fillStyle = "#ffd35a";
+    context.fillRect(x - 26, groundY - 58, archW + 70, 10);
+    context.fillRect(x - 26, groundY - 38, archW + 70, 10);
+    context.fillStyle = "#26332a";
+    for (let i = 0; i < 8; i += 1) {
+      context.fillRect(x - 16 + i * 24, groundY - 56, 12, 28);
+    }
+
+    context.textBaseline = "alphabetic";
   }
 }
 
