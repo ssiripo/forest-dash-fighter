@@ -177,28 +177,28 @@ const PNG_CHARACTER_FRAMES = {
 
 const GOOOD_PNG_CHARACTER_FRAMES = {
   idle: {
-    right: { sx: 885, sy: 295, sw: 170, sh: 305, dw: 58, dh: 98, flipX: false },
-    left: { sx: 585, sy: 805, sw: 170, sh: 305, dw: 58, dh: 98, flipX: false }
+    right: { sx: 900, sy: 290, sw: 140, sh: 250, dw: 58, dh: 98, flipX: false },
+    left: { sx: 595, sy: 800, sw: 140, sh: 250, dw: 58, dh: 98, flipX: false }
   },
   run: {
     right: [
-      { sx: 885, sy: 295, sw: 170, sh: 305, dw: 58, dh: 98, flipX: false },
-      { sx: 885, sy: 805, sw: 170, sh: 305, dw: 58, dh: 98, flipX: false },
-      { sx: 745, sy: 805, sw: 170, sh: 305, dw: 58, dh: 98, flipX: false }
+      { sx: 900, sy: 290, sw: 140, sh: 250, dw: 58, dh: 98, flipX: false },
+      { sx: 900, sy: 800, sw: 140, sh: 250, dw: 58, dh: 98, flipX: false },
+      { sx: 755, sy: 800, sw: 140, sh: 250, dw: 58, dh: 98, flipX: false }
     ],
     left: [
-      { sx: 585, sy: 805, sw: 170, sh: 305, dw: 58, dh: 98, flipX: false },
-      { sx: 745, sy: 805, sw: 170, sh: 305, dw: 58, dh: 98, flipX: true },
-      { sx: 885, sy: 805, sw: 170, sh: 305, dw: 58, dh: 98, flipX: true }
+      { sx: 595, sy: 800, sw: 140, sh: 250, dw: 58, dh: 98, flipX: false },
+      { sx: 755, sy: 800, sw: 140, sh: 250, dw: 58, dh: 98, flipX: true },
+      { sx: 900, sy: 800, sw: 140, sh: 250, dw: 58, dh: 98, flipX: true }
     ]
   },
   jump: {
-    right: { sx: 885, sy: 295, sw: 170, sh: 305, dw: 58, dh: 98, flipX: false },
-    left: { sx: 585, sy: 805, sw: 170, sh: 305, dw: 58, dh: 98, flipX: false }
+    right: { sx: 900, sy: 290, sw: 140, sh: 250, dw: 58, dh: 98, flipX: false },
+    left: { sx: 595, sy: 800, sw: 140, sh: 250, dw: 58, dh: 98, flipX: false }
   },
   attack: {
-    right: { sx: 885, sy: 295, sw: 170, sh: 305, dw: 60, dh: 100, flipX: false },
-    left: { sx: 585, sy: 805, sw: 170, sh: 305, dw: 60, dh: 100, flipX: false }
+    right: { sx: 900, sy: 290, sw: 140, sh: 250, dw: 60, dh: 100, flipX: false },
+    left: { sx: 595, sy: 800, sw: 140, sh: 250, dw: 60, dh: 100, flipX: false }
   }
 };
 
@@ -844,7 +844,7 @@ class Player {
   }
 
   getAttackBox() {
-    const range = this.effects.power ? PLAYER_TUNING.attackRange + 24 : PLAYER_TUNING.attackRange;
+    const range = PLAYER_TUNING.attackRange;
     return {
       x: this.facing > 0 ? this.x + this.w - 6 : this.x - range + 6,
       y: this.y + 18,
@@ -858,7 +858,7 @@ class Player {
     if (this.hitThisAttack.has(opponent.name)) return;
     if (!rectsOverlap(this.getAttackBox(), opponent.rect)) return;
     const damage = this.effects.power ? PLAYER_TUNING.attackDamage * 1.65 : PLAYER_TUNING.attackDamage;
-    const knockback = this.effects.power ? PLAYER_TUNING.attackKnockback * 1.6 : PLAYER_TUNING.attackKnockback;
+    const knockback = this.effects.power ? PLAYER_TUNING.attackKnockback * 3.2 : PLAYER_TUNING.attackKnockback;
     opponent.takeDamage(damage, this.facing, knockback, gameInstance);
     this.hitThisAttack.add(opponent.name);
   }
